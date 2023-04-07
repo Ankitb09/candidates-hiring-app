@@ -1,7 +1,40 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import checker from "vite-plugin-checker";
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-})
+export default defineConfig(({ mode }) => {
+  return {
+    build: {
+      outDir: "build",
+    },
+    server: {
+      port: 3000,
+    },
+    plugins: [
+      react({
+        babel: {
+          plugins: [
+            [
+              "babel-plugin-styled-components",
+              {
+                displayName: true,
+                ssr: false,
+                pure: true,
+                fileName: false,
+              },
+            ],
+          ],
+        },
+      }),
+      checker({
+        typescript: true,
+        eslint: {
+          lintCommand: 'eslint "./src/**/*.{ts,tsx}"',
+        },
+        overlay: {
+          initialIsOpen: false,
+        },
+      }),
+    ],
+  };
+});
