@@ -10,7 +10,7 @@ export const TableHeader = styled.div`
   padding: 10px 0;
 `;
 
-export const Th = styled.div`
+export const Th = styled.div<{ isSortable: boolean }>`
   padding: 5px;
   display: flex;
 `;

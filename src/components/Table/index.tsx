@@ -1,5 +1,7 @@
 import { Fragment } from "react";
 import { Candidate } from "../../@types/Candidate";
+import SortingIcons from '../SortingIcons';
+import Input from "../Input";
 
 import TableRow from "../TableRow";
 import * as S from "./styles";
@@ -16,18 +18,45 @@ interface TableProps {
   headings: Array<Heading>;
   rows: Array<Candidate>;
   isLoading: boolean;
+  sortBy: string;
+  orderBy: string;
+  sortingFn: any;
+  filterFn: any;
 }
 
-const Table = ({ headings, rows, isLoading }: TableProps) => {
+const Table = ({ sortBy, orderBy, sortingFn, filterFn, headings, rows, isLoading }: TableProps) => {
   return (
     <S.TableContainer>
       <S.TableHeader>
         {headings.map((item) => {
-          const { key, label } = item;
+          const { key, label, sortable, filterable } = item;
+          console.log(sortBy)
+          console.log({ key })
           return (
             <Fragment key={key}>
-              <S.Th>
+              <S.Th isSortable={sortable}>
                 {label}
+                {sortable && !isLoading && (
+                  <SortingIcons
+                    orderBy={orderBy}
+                    isCurrentSorted={key === sortBy}
+                    handleUpClick={() => {
+                      sortingFn(key, "asc");
+                    }}
+                    handleDownClick={() => {
+                      sortingFn(key, "desc");
+                    }}
+                  />
+                )}
+                {filterable && !isLoading && (
+                  <S.InputWrapper>
+                    <Input
+                      changeHandlerFn={(val) => {
+                        filterFn(key, val);
+                      }}
+                    />
+                  </S.InputWrapper>
+                )}
               </S.Th>
             </Fragment>
           );
