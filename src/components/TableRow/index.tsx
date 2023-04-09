@@ -1,7 +1,6 @@
 import { Candidate } from "../../@types/Candidate";
 import * as S from "./styles";
 
-
 interface TableRowProps {
   item: Candidate;
 }

@@ -1,3 +1,5 @@
+import { Candidate } from "../../@types/Candidate";
+import { SORT_DIRECTION } from "../../@types/Common";
 import { sortByFn, filterFn } from "../../utils";
 
 export enum TableActionKind {
@@ -7,46 +9,41 @@ export enum TableActionKind {
   CANDIDATES_LIST_FILTER_SORT = "CANDIDATES_LIST_FILTER_SORT",
 }
 
-// data: [],
-// filteredData: [],
-// error: false,
-// /**
-//  *
-//  * name: "",
-//   status: "",
-//   position: "",
-// */
-// filterBy: {},
-// /**
-//  *
-//  * position_applied: "desc",
-//  */
-// sortBy: {},
-
 interface TableState {
-  originalData: [];
-  data: [];
+  originalData: Array<Candidate>;
+  data: Array<Candidate>;
   error: boolean;
-  filterBy: {};
+  filterBy: {
+    [key: string]: string;
+  };
   sortBy: string;
-  orderBy: string;
+  orderBy: SORT_DIRECTION;
 }
+
+export interface FilterShape {
+  orderBy: SORT_DIRECTION;
+  sortBy: string;
+  filterBy: {
+    [key: string]: string;
+  };
+}
+
 export const initialState: TableState = {
   originalData: [],
   data: [],
   error: false,
   filterBy: {},
   sortBy: "",
-  orderBy: "",
+  orderBy: SORT_DIRECTION.ASC,
 };
 
 interface TableAction {
   type: TableActionKind;
   payload?: any;
   key?: string;
-  direction?: "asc" | "desc";
+  direction?: SORT_DIRECTION;
   query?: string;
-  filterObj?: any;
+  filterObj?: FilterShape;
 }
 
 export const tableReducer = (
@@ -70,19 +67,22 @@ export const tableReducer = (
         originalData: action.payload,
       };
 
-    case TableActionKind.CANDIDATES_LIST_FILTER_SORT:
-      const { filterBy, sortBy, orderBy } = action.filterObj;
+    case TableActionKind.CANDIDATES_LIST_FILTER_SORT: {
       let finalData = [...state.originalData];
 
-      if (filterBy) {
-        const filteringKeys = Object.keys(filterBy);
-        filteringKeys.map((key) => {
-          finalData = filterFn(finalData, filterBy[key], [key]);
-        });
-      }
+      if (action.filterObj) {
+        const { filterBy, sortBy, orderBy } = action.filterObj;
 
-      if (orderBy && sortBy) {
-        finalData = sortByFn(finalData, sortBy, orderBy);
+        if (filterBy) {
+          const filteringKeys = Object.keys(filterBy);
+          filteringKeys.map((key) => {
+            finalData = filterFn(finalData, filterBy[key], [key]);
+          });
+        }
+
+        if (orderBy && sortBy) {
+          finalData = sortByFn(finalData, sortBy, orderBy);
+        }
       }
 
       return {
@@ -90,32 +90,7 @@ export const tableReducer = (
         data: finalData,
         ...action.filterObj,
       };
-
-    // case TableActionKind.CANDIDATES_LIST_FILTER_SORT:
-
-    //   const newFilterObj = { ...state.filterBy, [action.key]: action.query };
-    //   let filteredData = [...state.originalData];
-
-    //   Object.keys(newFilterObj).map((key) => {
-    //     filteredData = filter(filteredData, newFilterObj[key], [key]);
-    //   });
-
-    //   const sortKey = Object.keys(state.sortBy)[0];
-
-    //   const filteredSortedData = sortBy(
-    //     filteredData,
-    //     sortKey,
-    //     state.sortBy[sortKey]
-    //   );
-
-    //   return {
-    //     ...state,
-    //     data: filteredSortedData,
-    //     filter: {
-    //       ...state.filter,
-    //       [action.key]: action.query,
-    //     },
-    //   };
+    }
 
     default:
       return state;

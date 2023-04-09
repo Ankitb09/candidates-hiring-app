@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const TableContainer = styled.div`
   border: 1px solid ${(props) => props.theme.palette.borderColor};

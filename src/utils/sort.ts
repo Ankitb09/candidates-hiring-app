@@ -1,9 +1,5 @@
 // copied
-const sortByFn = (
-  items: Array<any>,
-  key: string,
-  sortDirection: string
-) => {
+const sortByFn = (items: Array<any>, key: string, sortDirection: string) => {
   return items.slice(0).sort((a, b) => {
     if (sortDirection === "asc")
       return a[key] > b[key] ? 1 : a[key] < b[key] ? -1 : 0;
@@ -12,4 +8,4 @@ const sortByFn = (
   });
 };
 
-export default sortByFn
+export default sortByFn;

@@ -7,10 +7,10 @@ import {
 import * as S from "./styles";
 
 interface SortingIcons {
-  orderBy: 'asc' | 'desc';
+  orderBy: "asc" | "desc";
   isCurrentSorted: boolean;
   handleUpClick: () => void;
-  handleDownClick: () => void,
+  handleDownClick: () => void;
 }
 
 const SortingIcons = ({
