@@ -22,16 +22,15 @@ interface TableProps {
   orderBy: string;
   sortingFn: any;
   filterFn: any;
+  filterBy: Object
 }
 
-const Table = ({ sortBy, orderBy, sortingFn, filterFn, headings, rows, isLoading }: TableProps) => {
+const Table = ({ sortBy, orderBy, sortingFn, filterFn, filterBy, headings, rows, isLoading }: TableProps) => {
   return (
     <S.TableContainer>
       <S.TableHeader>
         {headings.map((item) => {
           const { key, label, sortable, filterable } = item;
-          console.log(sortBy)
-          console.log({ key })
           return (
             <Fragment key={key}>
               <S.Th isSortable={sortable}>

@@ -18,14 +18,18 @@ const Main = () => {
     }, [candidates])
 
     useEffect(() => {
-        let newObj = {};
+
         const currentParams = Object.fromEntries([...searchParams]);
         let filteredObj = removeEmptyKeys(currentParams);
 
+        // parsing query parameters to differentiate b/w filter and sorting params.
+        // And also creating a partial state object so that all filters and sorting can be applied
+        let newObj = {}; //partial state object
         Object.keys(filteredObj).map((item) => {
             if (item.includes('filterBy')) {
+                const key = item.replace('filterBy', '');
                 newObj.filterBy = {
-                    [item]: filteredObj[item]
+                    [key]: filteredObj[item]
                 }
             } else {
                 newObj[item] = filteredObj[item]
@@ -33,15 +37,15 @@ const Main = () => {
         });
 
         // need to something here
-        //dispatch({ type: TableActionKind.CANDIDATES_LIST_SORT, filterObj: newObj });
+        dispatch({ type: TableActionKind.CANDIDATES_LIST_FILTER_SORT, filterObj: newObj });
 
         setSearchParams(filteredObj);
-    }, [searchParams]);
+    }, [candidates, searchParams]);
 
 
     const handleSorting = (key, direction = "asc") => {
 
-        dispatch({ type: TableActionKind.CANDIDATES_LIST_SORT, key, direction });
+        //dispatch({ type: TableActionKind.CANDIDATES_LIST_SORT, key, direction });
 
 
         // adding sorting param to URL
@@ -52,7 +56,7 @@ const Main = () => {
     };
 
     const handleSearch = debounce((key, query) => {
-        dispatch({ type: TableActionKind.CANDIDATES_LIST_FILTER_SORT, key, query });
+        //dispatch({ type: TableActionKind.CANDIDATES_LIST_FILTER_SORT, key, query });
 
         // adding search query params to URL
 
@@ -65,6 +69,7 @@ const Main = () => {
             sortBy={state.sortBy}
             orderBy={state.orderBy}
             sortingFn={handleSorting}
+            filterBy={state.filterBy}
             filterFn={handleSearch}
             headings={Headings}
             rows={state.data}

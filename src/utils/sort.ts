@@ -1,5 +1,5 @@
 // copied
-const sortByItems = (
+const sortByFn = (
   items: Array<any>,
   key: string,
   sortDirection: string
@@ -12,4 +12,4 @@ const sortByItems = (
   });
 };
 
-export default sortByItems;
+export default sortByFn
