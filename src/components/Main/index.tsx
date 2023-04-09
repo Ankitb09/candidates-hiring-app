@@ -27,6 +27,14 @@ const Main = () => {
         });
   }, [candidates, isError]);
 
+  /**
+   * Reading params from URL:-
+   * I have made URL as source of truth for filtering and sorting. This also helps
+   * in sharing of URL.
+   * Whenever user enters some filter text or click on sort icon this useEffect
+   * will gets triggered, which dispatches TableActionKind.CANDIDATES_LIST_FILTER_SORT
+   * action.
+   */
   useEffect(() => {
     const currentParams = Object.fromEntries([...searchParams]);
     const filteredObj = removeEmptyKeys(currentParams);

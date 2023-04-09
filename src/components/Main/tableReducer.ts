@@ -51,6 +51,7 @@ export const tableReducer = (
   action: TableAction
 ): TableState => {
   switch (action.type) {
+    // candidates fetch success
     case TableActionKind.CANDIDATES_GET:
       return {
         ...state,
@@ -59,6 +60,7 @@ export const tableReducer = (
         originalData: action.payload,
       };
 
+    // candidates fetch error
     case TableActionKind.CANDIDATES_GET_ERROR:
       return {
         ...state,
@@ -66,6 +68,7 @@ export const tableReducer = (
         data: action.payload,
       };
 
+    //common action for filtering and sorting,
     case TableActionKind.CANDIDATES_LIST_FILTER_SORT: {
       let finalData = [...state.originalData];
 
