@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import * as S from "./styles";
 
 interface InputProps {
   changeHandlerFn: (elementName: string) => void;
@@ -17,7 +18,7 @@ const Input = ({ changeHandlerFn, defaultValue = "" }: InputProps) => {
     setValue(defaultValue);
   }, [defaultValue]);
 
-  return <input type="text" value={value} onChange={onChangeHandler} />;
+  return <S.Input type="text" value={value} onChange={onChangeHandler} />;
 };
 
 export default Input;

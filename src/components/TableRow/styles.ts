@@ -4,10 +4,9 @@ export const RowWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, 14%);
   overflow-wrap: break-word;
-  padding: 10px 0;
 
   &:nth-child(odd) {
-    background-color: #f2f2f2;
+    background-color: #f8f6ff;
     color: #000;
   }
   &:hover {
@@ -16,5 +15,10 @@ export const RowWrapper = styled.div`
 `;
 
 export const Td = styled.div`
-  padding: 5px;
+  padding: 12px;
+  border-right: 1px solid ${(props) => props.theme.palette.borderColor};
+
+  &:last-child {
+    border-right: 0 none;
+  }
 `;

@@ -23,7 +23,7 @@ declare module "styled-components" {
       error: {
         main: string;
       };
-      text: {
+      textColor: {
         primary: string;
         secondary: string;
       };
@@ -32,12 +32,12 @@ declare module "styled-components" {
         200: string;
       };
       bodyBg: string;
-      textColor: string;
       borderColor: string;
       backdrop: string;
       modalBg: string;
       tableBg: string;
       tableHeadingBg: string;
+      tableRowBg: string;
     };
     spacing: {
       xs: string;

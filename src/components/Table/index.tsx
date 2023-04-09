@@ -14,31 +14,14 @@ interface Heading {
   filterable: boolean;
 }
 
-// interface TableProps {
-//   headings: Array<Heading>;
-//   rows: Array<Candidate>;
-//   isLoading: boolean;
-//   sortBy: string;
-//   orderBy: string;
-//   sortingFn: any;
-//   filterFn: any;
-//   filterBy: Object
-// }
-
-interface ObjectWithId {
+export interface ObjectWithId {
   id: string | number;
 }
 
-interface TableProps<
-  T extends ObjectWithId,
-  F extends (item: never) => void = (item: T) => void // <--- expose the type
-> {
+interface TableProps<T extends ObjectWithId> {
   rows: T[];
-  // searchKey: K;
-  onClick?: F;
   headings: Array<Heading>;
   isLoading: boolean;
-
   sortingFn: (key: string, sortDirection: SORT_DIRECTION) => void;
   filterFn: (key: string, val: string) => void;
   filterBy: {
@@ -49,7 +32,6 @@ interface TableProps<
 }
 
 // Fix candidate with Generics
-
 const Table = ({
   sortBy,
   orderBy,
@@ -68,29 +50,31 @@ const Table = ({
           return (
             <Fragment key={key}>
               <S.Th isSortable={sortable}>
-                {label}
-                {sortable && !isLoading && (
-                  <SortingIcons
-                    orderBy={orderBy}
-                    isCurrentSorted={key === sortBy}
-                    handleUpClick={() => {
-                      sortingFn(key, SORT_DIRECTION.ASC);
-                    }}
-                    handleDownClick={() => {
-                      sortingFn(key, SORT_DIRECTION.DESC);
-                    }}
-                  />
-                )}
-                {filterable && !isLoading && (
-                  <S.InputWrapper>
+                <S.labelWrapper>
+                  {label}
+                  {sortable && !isLoading && (
+                    <SortingIcons
+                      orderBy={orderBy}
+                      isCurrentSorted={key === sortBy}
+                      handleUpClick={() => {
+                        sortingFn(key, SORT_DIRECTION.ASC);
+                      }}
+                      handleDownClick={() => {
+                        sortingFn(key, SORT_DIRECTION.DESC);
+                      }}
+                    />
+                  )}
+                </S.labelWrapper>
+                <div>
+                  {filterable && !isLoading && (
                     <Input
                       defaultValue={filterBy[key]}
                       changeHandlerFn={(val) => {
                         filterFn(key, val);
                       }}
                     />
-                  </S.InputWrapper>
-                )}
+                  )}
+                </div>
               </S.Th>
             </Fragment>
           );

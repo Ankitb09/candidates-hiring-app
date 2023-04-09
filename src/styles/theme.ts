@@ -10,9 +10,8 @@ const defaultTheme: DefaultTheme = {
     warning: { main: "#ed6c02" },
     success: { main: "#2e7d32" },
     error: { main: "#d32f2f" },
-    bodyBg: "#efebe9",
-    textColor: "#000",
-    text: {
+    bodyBg: "#fff",
+    textColor: {
       primary: "#fff",
       secondary: "#000",
     },
@@ -20,11 +19,12 @@ const defaultTheme: DefaultTheme = {
       100: "#e0e0e0",
       200: "#bdbdbd",
     },
-    borderColor: "#9e9e9e",
+    borderColor: "#fff",
     backdrop: "rgba(0, 0, 0, 0.5)",
     modalBg: "#fff",
     tableBg: "#fff",
-    tableHeadingBg: "#1976d2",
+    tableHeadingBg: "#6c7ae0",
+    tableRowBg: "#f8f6ff",
   },
   spacing: {
     xs: "2px",

@@ -1,4 +1,11 @@
-export const Headings = [
+export interface HeadingShape {
+  label: string;
+  key: string;
+  sortable: boolean;
+  filterable: boolean;
+}
+
+export const Headings: Array<HeadingShape> = [
   {
     label: "Name",
     key: "name",

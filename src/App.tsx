@@ -1,12 +1,12 @@
-import { Title } from "./app.style";
+import * as S from "./app.style";
 import Main from "./components/Main";
 
 function App() {
   return (
-    <div>
-      <Title>Hello</Title>
+    <S.Wrapper>
+      <S.Title>Hello</S.Title>
       <Main />
-    </div>
+    </S.Wrapper>
   );
 }
 
