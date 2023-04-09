@@ -37,7 +37,7 @@ export const Headings: Array<HeadingShape> = [
     filterable: true,
   },
   {
-    label: "Applied",
+    label: "Date of Application",
     key: "application_date",
     sortable: true,
     filterable: false,

@@ -1,6 +1,7 @@
 import { useReducer, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import Table from "../Table";
+import Error from "../Error";
 import useCandidate from "../../utils/useCandidate";
 import { Headings } from "./config";
 import { debounce, removeEmptyKeys } from "../../utils";
@@ -13,13 +14,18 @@ import {
 import { SORT_DIRECTION } from "../../@types/Common";
 
 const Main = () => {
-  const { candidates, isLoading } = useCandidate();
+  const { candidates, isLoading, isError, error } = useCandidate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useReducer(tableReducer, initialState);
 
   useEffect(() => {
-    dispatch({ type: TableActionKind.CANDIDATES_GET, payload: candidates });
-  }, [candidates]);
+    !isError
+      ? dispatch({ type: TableActionKind.CANDIDATES_GET, payload: candidates })
+      : dispatch({
+          type: TableActionKind.CANDIDATES_GET_ERROR,
+          payload: error,
+        });
+  }, [candidates, isError]);
 
   useEffect(() => {
     const currentParams = Object.fromEntries([...searchParams]);
@@ -38,6 +44,7 @@ const Main = () => {
       if (item.includes("filterBy")) {
         const key = item.replace("filterBy", "");
         newObj.filterBy = {
+          ...newObj.filterBy,
           [key]: filteredObj[item],
         };
       } else if (item.includes("sortBy")) {
@@ -63,10 +70,14 @@ const Main = () => {
   };
 
   const handleSearch = debounce((key: string, query: string) => {
-    // adding search query params to URL
+    // adding search params to URL
     searchParams.set(`filterBy${key}`, query);
     setSearchParams(searchParams);
   });
+
+  if (state.isError) {
+    return <Error label="Unable to fetch data" />;
+  }
 
   return (
     <Table

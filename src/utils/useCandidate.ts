@@ -6,14 +6,28 @@ export const BASE_PATH = "https://personio-fe-coding-challenge.vercel.app/api";
 const useCandidate = () => {
   const [candidates, setCandidates] = useState<Array<Candidate>>([]);
   const [isError, setIsError] = useState(false);
+  const [error, setError] = useState({});
   const [isLoading, setIsLoader] = useState(false);
 
   const fetchCandidates = async () => {
     try {
       setIsLoader(true);
       const response = await fetch(`${BASE_PATH}/candidates`);
-      const candidates = await response.json();
-      setCandidates(candidates.data);
+      if (!response.ok) {
+        // make the promise be rejected if we didn't get a 2xx response
+        throw new Error("Not 2xx response", { cause: response });
+      } else {
+        const candidates = await response.json();
+
+        if (candidates.error) {
+          setIsError(true);
+          setError(candidates.error);
+        } else {
+          setIsError(false);
+          setCandidates(candidates.data);
+        }
+      }
+
       setIsLoader(false);
     } catch (error) {
       setIsLoader(false);
@@ -28,6 +42,7 @@ const useCandidate = () => {
   return {
     candidates,
     isError,
+    error,
     isLoading,
   };
 };

@@ -47,6 +47,7 @@ const Table = ({
       <S.TableHeader>
         {headings.map((item) => {
           const { key, label, sortable, filterable } = item;
+
           return (
             <Fragment key={key}>
               <S.Th isSortable={sortable}>
@@ -83,7 +84,11 @@ const Table = ({
 
       {isLoading
         ? "loading.."
-        : rows?.map((item) => <TableRow key={item.id} item={item} />)}
+        : rows?.map((item) => (
+            <TableRow key={item.id} item={item} headings={headings} />
+          ))}
+
+      {!isLoading && !rows.length && <div> no data to display</div>}
     </S.TableContainer>
   );
 };

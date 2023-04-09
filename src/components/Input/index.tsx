@@ -18,7 +18,14 @@ const Input = ({ changeHandlerFn, defaultValue = "" }: InputProps) => {
     setValue(defaultValue);
   }, [defaultValue]);
 
-  return <S.Input type="text" value={value} onChange={onChangeHandler} />;
+  return (
+    <S.Input
+      type="text"
+      value={value}
+      onChange={onChangeHandler}
+      placeholder="enter search term"
+    />
+  );
 };
 
 export default Input;

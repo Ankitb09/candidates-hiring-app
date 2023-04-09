@@ -12,7 +12,7 @@ export enum TableActionKind {
 interface TableState {
   originalData: Array<Candidate>;
   data: Array<Candidate>;
-  error: boolean;
+  isError: boolean;
   filterBy: {
     [key: string]: string;
   };
@@ -31,7 +31,7 @@ export interface FilterShape {
 export const initialState: TableState = {
   originalData: [],
   data: [],
-  error: false,
+  isError: false,
   filterBy: {},
   sortBy: "",
   orderBy: SORT_DIRECTION.ASC,
@@ -54,7 +54,7 @@ export const tableReducer = (
     case TableActionKind.CANDIDATES_GET:
       return {
         ...state,
-        error: false,
+        isError: false,
         data: action.payload,
         originalData: action.payload,
       };
@@ -62,9 +62,8 @@ export const tableReducer = (
     case TableActionKind.CANDIDATES_GET_ERROR:
       return {
         ...state,
-        error: true,
+        isError: true,
         data: action.payload,
-        originalData: action.payload,
       };
 
     case TableActionKind.CANDIDATES_LIST_FILTER_SORT: {

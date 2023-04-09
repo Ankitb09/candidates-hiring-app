@@ -4,7 +4,7 @@ import Main from "./components/Main";
 function App() {
   return (
     <S.Wrapper>
-      <S.Title>Hello</S.Title>
+      <S.Title>Candidates Hiring App</S.Title>
       <Main />
     </S.Wrapper>
   );
