@@ -80,7 +80,10 @@ export const tableReducer = (
         }
 
         if (orderBy && sortBy) {
-          finalData = sortByFn(finalData, sortBy, orderBy);
+          finalData =
+            sortBy === "application_date"
+              ? sortByFn(finalData, sortBy, orderBy, true)
+              : sortByFn(finalData, sortBy, orderBy);
         }
       }
 

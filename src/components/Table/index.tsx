@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import SortingIcons from "../SortingIcons";
 import Input from "../Input";
+import Loader from "../Loader";
 
 import TableRow from "../TableRow";
 import * as S from "./styles";
@@ -82,13 +83,15 @@ const Table = ({
         })}
       </S.TableHeader>
 
-      {isLoading
-        ? "loading.."
-        : rows?.map((item) => (
-            <TableRow key={item.id} item={item} headings={headings} />
-          ))}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        rows?.map((item) => (
+          <TableRow key={item.id} item={item} headings={headings} />
+        ))
+      )}
 
-      {!isLoading && !rows.length && <div> no data to display</div>}
+      {!isLoading && !rows.length && <S.Nodata> No data to display</S.Nodata>}
     </S.TableContainer>
   );
 };

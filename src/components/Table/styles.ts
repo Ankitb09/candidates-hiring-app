@@ -31,3 +31,8 @@ export const labelWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
 `;
+
+export const Nodata = styled.div`
+  text-align: center;
+  padding: 20px;
+`;
